@@ -4,6 +4,7 @@ import 'package:gdg_flutter_firebase_chat/models/user_data.dart';
 import 'package:gdg_flutter_firebase_chat/services/auth_service.dart';
 import 'package:gdg_flutter_firebase_chat/services/database_service.dart';
 import 'package:gdg_flutter_firebase_chat/widgets/all_attendees_widget.dart';
+import 'package:gdg_flutter_firebase_chat/widgets/app_drawer_widget.dart';
 import 'package:provider/provider.dart';
 
 class AttendeesScreen extends StatefulWidget {
@@ -36,13 +37,10 @@ class _AttendeesScreenState extends State<AttendeesScreen> {
      
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
+            drawer: AppDrawer(),
+
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          iconSize: 30.0,
-          color: Colors.white,
-          onPressed: () {},
-        ),
+         
         title: Text(
           'Attendees',
           style: TextStyle(

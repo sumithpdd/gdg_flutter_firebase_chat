@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gdg_flutter_firebase_chat/helpers/constants.dart';
 import 'package:gdg_flutter_firebase_chat/models/user.dart';
 
@@ -17,4 +17,12 @@ class DataBaseService {
     });
     return users;
   }
-} 
+
+  static void updateUser(User user) {
+    usersRef.document(user.id).updateData({
+      'name': user.name,
+      'profileImageUrl': user.profileImageUrl,
+      'bio': user.bio,
+    });
+  }
+}

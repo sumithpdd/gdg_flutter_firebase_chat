@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Chat App profile and sharing</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Chat App profile and sharing</string>
 </dict>
 </plist>
