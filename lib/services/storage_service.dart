@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:gdg_flutter_firebase_chat/helpers/constants.dart'; 
+import 'package:gdg_flutter_firebase_chat/helpers/constants.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -36,5 +36,23 @@ class StorageService {
     );
     return compressedImageFile;
   }
- 
+
+  Future<String> _uploadImage(String path, String imageId, File image) async {
+    StorageUploadTask uploadTask = storageRef.child(path).putFile(image);
+    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+  Future<String> uploadMessageImage(File imageFile) async {
+    String imageId = Uuid().v4();
+    File image = await compressImage(imageId, imageFile);
+
+    String downloadUrl = await _uploadImage(
+      'images/messages/message_$imageId.jpg',
+      imageId,
+      image,
+    );
+    return downloadUrl;
+  }
 }

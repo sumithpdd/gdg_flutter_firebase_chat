@@ -53,7 +53,8 @@ class DataBaseService {
     });
 
     Comparator<Message> timestampComparator =
-        (a, b) => b.timestamp.compareTo(a.timestamp);
+            (b, a) => a.timestamp.compareTo(b.timestamp);
+
     messages.sort(timestampComparator);
     return messages;
   }
