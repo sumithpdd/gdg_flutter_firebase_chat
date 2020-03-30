@@ -19,44 +19,42 @@ class Message {
 
 // YOU - current user
 final User currentUser = User(
-  id: 0,
+  id: '0',
   name: 'Current User',
   profileImageUrl: 'assets/images/greg.jpg',
-);
-
-// USERS
+); 
 final User sumith = User(
-  id: 1,
+  id: '1',
   name: 'sumith',
   profileImageUrl: 'assets/images/greg.jpg',
 );
 final User martin = User(
-  id: 2,
+  id: '2',
   name: 'martin',
   profileImageUrl: 'assets/images/james.jpg',
 );
 final User laura = User(
-  id: 3,
+  id: '3',
   name: 'laura',
   profileImageUrl: 'assets/images/john.jpg',
 );
 final User bilal = User(
-  id: 4,
+  id: '4',
   name: 'bilal',
   profileImageUrl: 'assets/images/olivia.jpg',
 );
 final User sam = User(
-  id: 5,
+  id: '5',
   name: 'Sam',
   profileImageUrl: 'assets/images/sam.jpg',
 );
 final User sophia = User(
-  id: 6,
+  id: '6',
   name: 'Sophia',
   profileImageUrl: 'assets/images/sophia.jpg',
 );
 final User steven = User(
-  id: 7,
+  id: '7',
   name: 'Steven',
   profileImageUrl: 'assets/images/steven.jpg',
 );

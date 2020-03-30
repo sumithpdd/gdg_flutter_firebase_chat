@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gdg_flutter_firebase_chat/helpers/app_constants.dart';
 import 'package:gdg_flutter_firebase_chat/screens/chat_screen.dart';
+import 'package:gdg_flutter_firebase_chat/screens/login_screen.dart';
 
 void main() {
   runApp(
@@ -20,7 +21,7 @@ void main() {
           caption: TextStyle(color: Colors.white),
         ),
       ),
-      home: ChatScreen(),
+      home: LoginScreen(),
     ),
   );
 }
