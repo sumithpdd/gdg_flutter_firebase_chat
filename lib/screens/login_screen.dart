@@ -4,6 +4,8 @@ import 'package:gdg_flutter_firebase_chat/helpers/app_constants.dart';
 import 'package:gdg_flutter_firebase_chat/services/auth_service.dart'; 
 
 class LoginScreen extends StatefulWidget {
+    static final String id ='login_screen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
