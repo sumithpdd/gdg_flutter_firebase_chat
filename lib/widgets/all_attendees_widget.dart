@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gdg_flutter_firebase_chat/models/user.dart';
+import 'package:gdg_flutter_firebase_chat/models/user_data.dart';
 import 'package:gdg_flutter_firebase_chat/screens/chat_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
 class AllAttendees extends StatelessWidget {
   final List<User> users;
@@ -9,11 +11,13 @@ class AllAttendees extends StatelessWidget {
   const AllAttendees({this.users});
   @override
   Widget build(BuildContext context) {
+    String currentUserId =
+        Provider.of<UserData>(context, listen: false).currentUserId;
+
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-         
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -26,8 +30,9 @@ class AllAttendees extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (_) => ChatScreen(
-                        // user: chat.sender,
-                        ),
+                      currentUserId: currentUserId,
+                      toUserId: user.id,
+                    ),
                   ),
                 ),
                 child: Container(
@@ -36,8 +41,7 @@ class AllAttendees extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                   decoration: BoxDecoration(
                     color: Color(0xFFFFEFEE),
-                    borderRadius: BorderRadius.all( Radius.circular(20.0) 
-                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,8 +51,10 @@ class AllAttendees extends StatelessWidget {
                           CircleAvatar(
                             radius: 35.0,
                             backgroundImage: user.profileImageUrl.isEmpty
-                                ? AssetImage('assets/images/user_placeholder.jpg')
-                                : CachedNetworkImageProvider(user.profileImageUrl),
+                                ? AssetImage(
+                                    'assets/images/user_placeholder.jpg')
+                                : CachedNetworkImageProvider(
+                                    user.profileImageUrl),
                           ),
                           SizedBox(width: 10.0),
                           Column(
@@ -67,7 +73,7 @@ class AllAttendees extends StatelessWidget {
                                 user.bio,
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 15.0, 
+                                  fontSize: 15.0,
                                 ),
                               ),
                             ],

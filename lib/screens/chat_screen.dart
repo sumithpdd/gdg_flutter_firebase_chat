@@ -1,8 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdg_flutter_firebase_chat/helpers/app_constants.dart';
+import 'package:gdg_flutter_firebase_chat/helpers/constants.dart';
 import 'package:gdg_flutter_firebase_chat/models/message.dart';
+import 'package:gdg_flutter_firebase_chat/services/database_service.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
+  final String currentUserId;
+  final String toUserId;
+
+  ChatScreen({this.currentUserId, this.toUserId});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -11,7 +20,24 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textMessageController = TextEditingController();
   bool _isComposing = false;
 
-  final List<Message> _messages = messages;
+  DataBaseService _dataBaseService;
+  List<Message> _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _dataBaseService = Provider.of<DataBaseService>(context, listen: false);
+
+    _setupMessages();
+  }
+
+  _setupMessages() async {
+    List<Message> messages = await _dataBaseService.getChatMessages(
+        widget.currentUserId, widget.toUserId);
+    setState(() {
+      _messages = messages;
+    });
+  }
 
   _buildMessage(Message message, bool isMe) {
     final Widget msg = Padding(
@@ -63,7 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  message.time,
+                  '${timeFormat.format(message.timestamp.toDate())}',
                   style: TextStyle(
                     color: isMe ? Colors.white60 : Colors.grey,
                     fontSize: 12.0,
@@ -142,8 +168,9 @@ class _ChatScreenState extends State<ChatScreen> {
       _isComposing = false;
     });
     Message message = Message(
-      sender: currentUser,
-      time: '6:30 PM',
+      senderId: widget.currentUserId,
+      toUserId: widget.toUserId,
+      timestamp: Timestamp.fromDate(DateTime.now()),
       text: text,
       isLiked: true,
       unread: true,
@@ -151,6 +178,7 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       _messages.insert(0, message);
     });
+    _dataBaseService.sendChatMessage(message);
   }
 
   @override
@@ -169,7 +197,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemCount: _messages.length,
                   itemBuilder: (BuildContext context, int index) {
                     final Message message = _messages[index];
-                    final bool isMe = message.sender.id == currentUser.id;
+                    final bool isMe = message.senderId == widget.currentUserId;
 
                     return _buildMessage(message, isMe);
                   },
